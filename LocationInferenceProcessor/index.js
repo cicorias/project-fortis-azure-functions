@@ -10,6 +10,7 @@ module.exports = function (context, input) {
         const messageId = input.message.id;
         const originalSources = input.message.originalSources || [input.source];
         const userProvidedLocation = input.message.geo;
+        const extensions = input.message.extensions || {};
         const retweetedId = input.message.retweet_id || "";
         const retweetCount = input.message.retweet_count || 0;
         
@@ -24,7 +25,7 @@ module.exports = function (context, input) {
                                                    if(locations && locations.features.length > 0 && !error){
                                                         deliverMessageToEventHub(messageId, sentence, locations, lang, 
                                                                                  input.source, input.created_at, retweetedId, 
-                                                                                 retweetCount, originalSources, title, link, context);
+                                                                                 retweetCount, originalSources, title, link, extensions, context);
                                                    }else if(error){
                                                        const errMsg = `An error occured [${error}].`;
                                                        context.done(errMsg);
@@ -42,7 +43,7 @@ module.exports = function (context, input) {
 
 function deliverMessageToEventHub(messageId, message, featureCollection, lang, source, 
                                   creationDate, retweetedId, retweetCount, originalSources, 
-                                  title, link, context) {
+                                  title, link, extensions, context) {
     try{
         context.bindings.outputEventHubMessage = {
             "Language": lang,
@@ -55,7 +56,8 @@ function deliverMessageToEventHub(messageId, message, featureCollection, lang, s
             "RetweetedMessageId": retweetCount,
             "RetweetCount": retweetCount,
             "Source": source,
-            "OriginalSources": originalSources, 
+            "OriginalSources": originalSources,
+            "Extensions": extensions, 
             "Locations": featureCollection && featureCollection.features ? featureCollection.features : []
         };
     }catch(error){
