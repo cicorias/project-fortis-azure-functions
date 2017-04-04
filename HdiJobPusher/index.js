@@ -24,7 +24,7 @@ function createByTilePayload() {
   const storageAccount = process.env.AZURE_STORAGE_CONNECTION_STRING
 
   return {
-    "file" : `wasb://${clusterContainerName}@${clusterStorageName}.blob.core.windows.net/fortis/bytileAggregator_OneFile.py`,
+    "file" : `wasb://${clusterContainerName}@${clusterStorageName}.blob.core.windows.net/fortis/bytileAggregator.py`,
     "pyFiles": `wasb://${clusterContainerName}@${clusterStorageName}.blob.core.windows.net/fortis/artifacts.zip`, 
     "conf": { 
       "spark.executor.cores" : "7",
