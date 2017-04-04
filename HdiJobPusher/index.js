@@ -1,4 +1,24 @@
 const request = require('request')
+const azure = require('azure-storage');
+
+const REQUIRED_CONTAINERS = [process.env.TILES_PREV_CONTAINER, process.env.TILES_CONTAINER,
+                             process.env.PROCESSED_MESSAGES_CONTAINER, process.env.TIMESERIES_CONTAINER];
+
+let CreateMissingContainers = (containers, context) => {
+    let blobService = azure.createBlobService();
+
+    if(containers && containers.length > 0){
+        containers.forEach(container => {
+          if(container){  
+            blobService.createContainerIfNotExists(container, {}, (error, result, response) => {
+              if(error) {
+                context.done(`An error occured creating blob '${container}' with error deescription ${error}`)
+              }
+            });
+          }
+        });
+    }
+};
 
 const ParseStorageAccount = (connectionString, key) => {
           let matchedPosition = connectionString.indexOf(key);
@@ -53,8 +73,9 @@ function pushHdiJobs(context) {
   const appName = process.env.APP_NAME
   const endpoint = `http://${appName}.azurewebsites.net/api/jobs/push`
 
-  const byTileBody = `${JSON.stringify(createByTilePayload())}`
-  context.log(`Pushing HDI job with payload: ${byTileBody}`)
+  const byTileBody = `${JSON.stringify(createByTilePayload())}`;
+  CreateMissingContainers(REQUIRED_CONTAINERS, context);
+  context.log(`Pushing HDI job with payload: ${byTileBody}`);
   request.post({url: endpoint, form: {data: byTileBody}}, function (error, response, body) {
     if (error) {
       context.log(`Received HTTP request error: '${error}'`)
