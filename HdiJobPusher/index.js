@@ -42,7 +42,7 @@ function createByTilePayload() {
       process.env.PROCESSED_MESSAGES_CONTAINER,
       "/*/part*",
       process.env.TIMESERIES_CONTAINER,
-      "searchkeywords",
+      "searchTerms",
       "keywordFilters",
       "models",
       "SWN3_ar_ur.json"
