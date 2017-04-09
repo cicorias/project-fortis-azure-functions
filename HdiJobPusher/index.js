@@ -65,7 +65,8 @@ function createByTilePayload() {
       "searchTerms",
       "keywordFilters",
       "models",
-      "SWN3_ar_ur.json"
+      "SWN3_ar_ur.json",
+      process.env.FORTIS_SITE_NAME
   ] }
 }
 
