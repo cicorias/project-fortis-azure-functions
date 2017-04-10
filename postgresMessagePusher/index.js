@@ -120,7 +120,7 @@ function pushMessage(messageStr, callback) {
     let keywords = messageJSON.Keywords;
     let sentence = TrimSentence(keywords, messageJSON.Sentence, MAX_CHARACTER_LIMIT);
     //Ignore tweeted messages
-    let isRewteet = (messageJSON.RetweetedMessageId && messageJSON.RetweetedMessageId.length > 0) ? true : false;
+    let isRewteet = (messageJSON.RetweetCount && parseInt(messageJSON.RetweetCount) > 0) ? true : false;
     let locations = messageJSON.Locations;
     let originalSources = messageJSON.OriginalSources && Array.isArray(messageJSON.OriginalSources) && messageJSON.OriginalSources.length > 0 ? messageJSON.OriginalSources : [messageJSON.PartitionKey];
     let title = messageJSON.Title || "";
