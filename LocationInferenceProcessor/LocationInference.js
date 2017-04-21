@@ -169,7 +169,7 @@ function ParseSharedLocation(features){
 function inferLocations(userId, lang, sentence, callback, userSharedLocation, siteDefinition){
       const supportedLanguages = siteDefinition.properties.supportedLanguages;
       const storageConnectionString = siteDefinition.properties.featuresConnectionString;
-      logger(`inferLocations[${userId}, ${lang}]`);
+      logger(`inferLocations[${userId}, ${lang},${supportedLanguages}]`);
 
       if(!supportedLanguages || !storageConnectionString){
              let errMsg = `either supportedLanguages or storageConnectionString is undefined.`;
