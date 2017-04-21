@@ -72,6 +72,7 @@ function CreateFeatureCollection(feature){
 }
 
 function LocalitiesByTwitterUserGraphCallback(resolve, reject, userId){
+    logger(`LocalitiesByTwitterUserGraphCallback[${userId}]`);
     if(userId && userId.length > 0){
         logger(`retrieve resource[${userId}] from table storage`);
         tableSvc.retrieveEntity(TWITTER_USER_TABLE, userId.substring(0, 2), userId, (error, result, response) => {
