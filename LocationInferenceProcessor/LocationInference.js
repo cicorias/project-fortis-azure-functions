@@ -129,6 +129,7 @@ function LocalitiesByNameCallback(error, results, resolve, reject, sentence, fie
 }
 
 function findLocality(prevMessage, lang, sentence, supportedLanguages, storageConnectionString, callback) {
+     logger(`findLocality[${prevMessage}, ${lang}]`);
      let fieldNames = `${supportedLanguages.join("_name, ").replace(/en_/g, "")}_name`;//alternatenames,
         fieldNames += ", alternatenames";
      
@@ -180,10 +181,8 @@ function inferLocations(userId, lang, sentence, callback, userSharedLocation, si
              callback(featureCollection, lang, undefined);
       }else{
             let findLocationByUserPromise = new Promise((resolve, reject) => {
-                logger(`call LocalitiesByTwitterUserGraphCallback [${userId}, ${lang}]`);
                 LocalitiesByTwitterUserGraphCallback(resolve, reject, userId);
             });
-            logger(`call findLocationByUserPromise [${userId}, ${lang}]`);
             findLocationByUserPromise.then(locations => callback(locations, lang, undefined), 
                     error => findLocality(error, lang, sentence, supportedLanguages, storageConnectionString, callback)
             );
