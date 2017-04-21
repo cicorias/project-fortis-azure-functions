@@ -3,7 +3,7 @@
         {
           "type": "timerTrigger",
           "name": "runInterval",
-          "schedule": "0 0 * * * *",//Run once at the top of every hour
+          "schedule": "0 0 * * * *",
           "direction": "in"
         },
         {
