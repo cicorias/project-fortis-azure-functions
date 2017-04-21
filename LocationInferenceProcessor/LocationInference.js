@@ -129,9 +129,10 @@ function LocalitiesByNameCallback(error, results, resolve, reject, sentence, fie
 }
 
 function findLocality(prevMessage, lang, sentence, supportedLanguages, storageConnectionString, callback) {
-     logger(`findLocality[${prevMessage}, ${lang}]`);
+    logger(`findLocality[${prevMessage}, ${lang}]`);
      let fieldNames = `${supportedLanguages.join("_name, ").replace(/en_/g, "")}_name`;//alternatenames,
         fieldNames += ", alternatenames";
+    logger(`fieldNames for findLocality[${fieldNames}]`);
      
      let query = `SELECT ${fieldNames},
 	               MAX(st_asgeojson(geog)) as feature
