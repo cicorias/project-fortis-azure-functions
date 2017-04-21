@@ -167,6 +167,7 @@ function ParseSharedLocation(features){
 function inferLocations(userId, lang, sentence, callback, userSharedLocation, siteDefinition){
       const supportedLanguages = siteDefinition.properties.supportedLanguages;
       const storageConnectionString = siteDefinition.properties.featuresConnectionString;
+      logger(`inferLocations[${userId}, ${lang}]`);
 
       if(!supportedLanguages || !storageConnectionString){
              let errMsg = `either supportedLanguages or storageConnectionString is undefined.`;
@@ -179,9 +180,10 @@ function inferLocations(userId, lang, sentence, callback, userSharedLocation, si
              callback(featureCollection, lang, undefined);
       }else{
             let findLocationByUserPromise = new Promise((resolve, reject) => {
+                logger(`call LocalitiesByTwitterUserGraphCallback [${userId}, ${lang}]`);
                 LocalitiesByTwitterUserGraphCallback(resolve, reject, userId);
             });
-
+            logger(`call findLocationByUserPromise [${userId}, ${lang}]`);
             findLocationByUserPromise.then(locations => callback(locations, lang, undefined), 
                     error => findLocality(error, lang, sentence, supportedLanguages, storageConnectionString, callback)
             );
