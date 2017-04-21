@@ -66,6 +66,6 @@ function deliverMessageToEventHub(messageId, message, featureCollection, lang, s
         
         return;
     }
-
+    context.log('I am DONE!!!');
     context.done();
 }
