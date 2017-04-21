@@ -27,6 +27,7 @@ const FetchSiteDefinition = (siteId, callback) => {
     }else{
         logger(`Loading site settings from settings service for site [${siteId}]`);
         Services.getSiteDefintion(siteId, (error, response, body) => {
+            logger(`Received settings from settings service for site [${siteId}]`);
             if(!error && response.statusCode === 200 && body.data && body.data.siteDefinition) {
                 const settings = body.data.siteDefinition.sites;
                 
@@ -72,6 +73,7 @@ function CreateFeatureCollection(feature){
 
 function LocalitiesByTwitterUserGraphCallback(resolve, reject, userId){
     if(userId && userId.length > 0){
+        logger(`retrieve resource[${userId}] from table storage`);
         tableSvc.retrieveEntity(TWITTER_USER_TABLE, userId.substring(0, 2), userId, (error, result, response) => {
             if(error){
                 reject(`Unable to retrieve resource[${userId}] from table storage. message [${error}]`);
