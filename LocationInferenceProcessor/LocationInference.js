@@ -186,7 +186,6 @@ function inferLocations(userId, lang, sentence, callback, userSharedLocation, si
             let findLocationByUserPromise = new Promise((resolve, reject) => {
                 LocalitiesByTwitterUserGraphCallback(resolve, reject, userId);
             });
-            logger(`inferLocations 2 [${locations}, ${lang}]`);
             findLocationByUserPromise.then(locations => callback(locations, lang, undefined), 
                     error => findLocality(error, lang, sentence, supportedLanguages, storageConnectionString, callback)
             );
