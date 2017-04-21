@@ -129,7 +129,7 @@ function LocalitiesByNameCallback(error, results, resolve, reject, sentence, fie
 }
 
 function findLocality(prevMessage, lang, sentence, supportedLanguages, storageConnectionString, callback) {
-    logger(`findLocality[${prevMessage}, ${lang}]`);
+    logger(`findLocality[${prevMessage}, ${lang}, ${supportedLanguages}]`);
      let fieldNames = `${supportedLanguages.join("_name, ").replace(/en_/g, "")}_name`;//alternatenames,
         fieldNames += ", alternatenames";
     logger(`fieldNames for findLocality[${fieldNames}]`);
