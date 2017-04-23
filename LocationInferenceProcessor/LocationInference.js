@@ -182,15 +182,13 @@ function inferLocations(userId, lang, sentence, callback, userSharedLocation, si
              const featureCollection = ParseSharedLocation(userSharedLocation);
              callback(featureCollection, lang, undefined);
       }else{
-          logger('done');
-           /*
+            logger('run LocalitiesByTwitterUserGraphCallback promise [userId: ${userId}]');
             let findLocationByUserPromise = new Promise((resolve, reject) => {
                 LocalitiesByTwitterUserGraphCallback(resolve, reject, userId);
             });
             findLocationByUserPromise.then(locations => callback(locations, lang, undefined), 
                     error => findLocality(error, lang, sentence, supportedLanguages, storageConnectionString, callback)
             );
-            */
       }
 }
 
