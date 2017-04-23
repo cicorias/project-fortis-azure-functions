@@ -89,6 +89,8 @@ function LocalitiesByTwitterUserGraphCallback(resolve, reject, userId){
                 reject(`undefined result return from table storage for userid [${userId}]`);
             }
         });
+    }else{
+        reject(`undefined userid`);
     }
 }
 
