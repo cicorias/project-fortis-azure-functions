@@ -23,7 +23,7 @@ module.exports = function (context, input) {
         LocationInferenceService.findLocation(userId, lang, sentence, userProvidedLocation, 
                                               context.log, (locations, lang, error) => {
                                                    if(locations && locations.features.length > 0 && !error){
-                                                        deliverMessageToEventHub(messageId, sentence, locations, lang, 
+                                                        deliverMessageToEventHub(messageId, userId, sentence, locations, lang, 
                                                                                  input.source, input.created_at, retweetedId, 
                                                                                  retweetCount, originalSources, title, link, extensions, context);
                                                    }else if(error){
@@ -41,7 +41,7 @@ module.exports = function (context, input) {
     }
 }
 
-function deliverMessageToEventHub(messageId, message, featureCollection, lang, source, 
+function deliverMessageToEventHub(messageId, userId, message, featureCollection, lang, source, 
                                   creationDate, retweetedId, retweetCount, originalSources, 
                                   title, link, extensions, context) {
     try{
@@ -51,6 +51,7 @@ function deliverMessageToEventHub(messageId, message, featureCollection, lang, s
             "Title": title,
             "Link": link,
             "MessageId": messageId.toString(),
+            "UserId": userId.toString(),
             "Created": creationDate,
             "PartitionKey": source,
             "RetweetedMessageId": retweetCount,
