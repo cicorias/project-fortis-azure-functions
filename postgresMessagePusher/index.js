@@ -17,7 +17,7 @@ const MAX_CHARACTER_LIMIT = 200;
 const PUSH_PARALLELISM = process.env.MESSAGE_PUSH_PARALLELISM || 50;
 const MAX_RETRIES = 5;
 const FORTIS_SITE_NAME = process.env.FORTIS_SITE_NAME;
-const requiredFields = ["Sentiment", "Language", "MessageId", "PartitionKey", "Sentence", "EventProcessedUtcTime", "Keywords", "Locations"]; 
+const requiredFields = ["Sentiment", "Language", "MessageId", "PartitionKey", "Sentence", "Created", "Keywords", "Locations"]; 
 const FetchSiteDefinition = (siteId, callback) => {
     const siteDefintion = fortisSiteCache.get(siteId);
 
@@ -148,7 +148,7 @@ function pushMessage(messageStr, callback) {
                 '${messageId}',
                 '${messageJSON.PartitionKey}',
                 '{"${keywords.join('","')}"}',
-                '${messageJSON.EventProcessedUtcTime}',
+                '${messageJSON.Created}',
                 ${ConvertGeoJsonToMultiPoint(locations)},
                 ${messageJSON.Sentiment},
                 '${sentence.replace(/\'/g, "\''")}',
@@ -164,7 +164,7 @@ function pushMessage(messageStr, callback) {
                 title = '${title.replace(/\'/g, "\''")}',
                 full_text = '${messageJSON.Sentence.replace(/\'/g, "\''")}',
                 geog = ${ConvertGeoJsonToMultiPoint(locations)},
-                createdtime = '${messageJSON.EventProcessedUtcTime}',
+                createdtime = '${messageJSON.Created}',
                 neg_sentiment = ${messageJSON.Sentiment},
                 ${messageJSON.Language.toLowerCase()}_sentence = '${sentence.replace(/\'/g, "\''")}'
             ;`;
