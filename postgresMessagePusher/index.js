@@ -156,10 +156,10 @@ function pushMessage(messageStr, callback) {
                 '${messageJSON.Sentence.replace(/\'/g, "\''")}',
                 '${link.replace(/\'/g, "\''")}',
                 '${title.replace(/\'/g, "\''")}',
-                '{"${originalSources.join('","')}"}'
+                '{"${originalSources.join('","').replace(/\'/g, "\''")}"}'
             ) ON CONFLICT (messageid, source) DO UPDATE SET
                 keywords = '{"${keywords.join('","')}"}',
-                original_sources = '{"${originalSources.join('","')}"}',
+                original_sources = '{"${originalSources.join('","').replace(/\'/g, "\''")}"}',
                 link = '${link.replace(/\'/g, "\''")}',
                 title = '${title.replace(/\'/g, "\''")}',
                 full_text = '${messageJSON.Sentence.replace(/\'/g, "\''")}',
